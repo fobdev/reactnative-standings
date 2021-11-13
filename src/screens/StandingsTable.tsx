@@ -26,30 +26,25 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
                 <ScrollView>
                     <DataTable.Header>
                         <DataTable.Title style={{ flex: 5 }}>Time</DataTable.Title>
-                        <DataTable.Title numeric>P</DataTable.Title>
-                        <DataTable.Title numeric>J</DataTable.Title>
-                        <DataTable.Title numeric>V</DataTable.Title>
-                        <DataTable.Title numeric>SG</DataTable.Title>
-                        <DataTable.Title numeric>GP</DataTable.Title>
-                        <DataTable.Title numeric>GC</DataTable.Title>
+                        {["P", "J", "V", "SG", "GP", "GC"].map((element, index) => {
+                            return (
+                                <DataTable.Title numeric key={index}>
+                                    {element}
+                                </DataTable.Title>
+                            );
+                        })}
                     </DataTable.Header>
                     {standingTasks?.data!.standings.map((element, index) => {
-                        const winCount = element.stats.find((current) => current.name === "wins");
-                        const pointsCount = element.stats.find(
-                            (current) => current.name === "points"
-                        );
-                        const gamesPlayedCount = element.stats.find(
-                            (current) => current.name === "gamesPlayed"
-                        );
-                        const pointsForCount = element.stats.find(
-                            (current) => current.name === "pointsFor"
-                        );
-                        const pointsAgainstCount = element.stats.find(
-                            (current) => current.name === "pointsAgainst"
-                        );
-                        const pointDifferentialCount = element.stats.find(
-                            (current) => current.name === "pointDifferential"
-                        );
+                        const findCount = (name: string) => {
+                            return element.stats.find((current) => current.name === name);
+                        };
+
+                        const winCount = findCount("wins");
+                        const pointsCount = findCount("points");
+                        const pointsForCount = findCount("pointsFor");
+                        const gamesPlayedCount = findCount("gamesPlayed");
+                        const pointsAgainstCount = findCount("pointsAgainst");
+                        const pointDifferentialCount = findCount("pointDifferential");
 
                         return (
                             <DataTable.Row
@@ -77,20 +72,20 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
                                     />
                                     <Text>{element.team.name}</Text>
                                 </DataTable.Cell>
-                                <DataTable.Cell numeric>{winCount?.displayValue}</DataTable.Cell>
-                                <DataTable.Cell numeric>
-                                    {gamesPlayedCount?.displayValue}
-                                </DataTable.Cell>
-                                <DataTable.Cell numeric>{pointsCount?.displayValue}</DataTable.Cell>
-                                <DataTable.Cell numeric>
-                                    {pointDifferentialCount?.displayValue}
-                                </DataTable.Cell>
-                                <DataTable.Cell numeric>
-                                    {pointsForCount?.displayValue}
-                                </DataTable.Cell>
-                                <DataTable.Cell numeric>
-                                    {pointsAgainstCount?.displayValue}
-                                </DataTable.Cell>
+                                {[
+                                    winCount?.displayValue,
+                                    gamesPlayedCount?.displayValue,
+                                    pointsCount?.displayValue,
+                                    pointDifferentialCount?.displayValue,
+                                    pointsForCount?.displayValue,
+                                    pointsAgainstCount?.displayValue,
+                                ].map((element, index) => {
+                                    return (
+                                        <DataTable.Cell numeric key={index}>
+                                            {element}
+                                        </DataTable.Cell>
+                                    );
+                                })}
                             </DataTable.Row>
                         );
                     })}
