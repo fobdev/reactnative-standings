@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
     StyleSheet,
     SafeAreaView,
@@ -8,11 +8,11 @@ import {
     Text,
     View,
 } from "react-native";
-import { useLeagues, useStanding } from "../hooks";
-import { LeaguesData, StandingsNavProp } from "../interfaces";
+import { useLeagues } from "../hooks";
+import { StandingsNavProp } from "../interfaces";
 import { Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
 
-export const Home = ({ navigation, route }: StandingsNavProp<"Home">) => {
+export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
     const [fontLoaded] = useFonts({ Roboto_300Light });
     const { leaguesTasks, getAllLeagues } = useLeagues();
 
