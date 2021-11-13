@@ -4,6 +4,7 @@ import { StandingsNavProp } from "../interfaces/stacks/StandingsStack";
 import { DataTable } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { useStanding } from "../hooks";
+import { Center } from "../utils";
 
 export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standings">) => {
     const [loading, setLoading] = useState(true);
@@ -16,9 +17,9 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
 
     if (loading)
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+            <Center>
                 <Text>{`Carregando ${route.params?.name}...`}</Text>
-            </View>
+            </Center>
         );
     else
         return (

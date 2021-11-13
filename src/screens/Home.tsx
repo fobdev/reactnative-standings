@@ -11,6 +11,7 @@ import {
 import { useLeagues } from "../hooks";
 import { StandingsNavProp } from "../interfaces";
 import { Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
+import { Center } from "../utils";
 
 export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
     const [fontLoaded] = useFonts({ Roboto_300Light });
@@ -22,9 +23,9 @@ export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
 
     if (!fontLoaded)
         return (
-            <View>
+            <Center>
                 <Text>Carregando...</Text>
-            </View>
+            </Center>
         );
     else
         return (
