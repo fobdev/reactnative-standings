@@ -1,13 +1,5 @@
 import React, { useEffect } from "react";
-import {
-    StyleSheet,
-    SafeAreaView,
-    ScrollView,
-    TouchableOpacity,
-    Image,
-    Text,
-    View,
-} from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Image, Text } from "react-native";
 import { useLeagues } from "../hooks";
 import { StandingsNavProp } from "../interfaces";
 import { Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
@@ -30,30 +22,33 @@ export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
     else
         return (
             <SafeAreaView>
-                <ScrollView showsVerticalScrollIndicator={false}>
+                <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
                     {leaguesTasks?.data!.map((element, index) => {
                         if (element.id !== "chn.1")
-                        return (
-                            <TouchableOpacity
-                                style={styles.customButton}
-                                key={index}
-                                onPress={() => {
-                                    navigation.navigate("Standings", {
-                                        id: element.id,
-                                        abbr: element.abbr,
-                                        logos: element.logos,
-                                        name: element.name,
-                                        slug: element.slug,
-                                    });
-                                }}
-                            >
-                                <Image style={styles.image} source={{ uri: element.logos.light }} />
-                                <Text style={styles.textBase}>
-                                    <Text>{element.name + "\n"}</Text>
-                                    <Text style={styles.subtitle}>{element.abbr}</Text>
-                                </Text>
-                            </TouchableOpacity>
-                        );
+                            return (
+                                <TouchableOpacity
+                                    style={styles.customButton}
+                                    key={index}
+                                    onPress={() => {
+                                        navigation.navigate("Standings", {
+                                            id: element.id,
+                                            abbr: element.abbr,
+                                            logos: element.logos,
+                                            name: element.name,
+                                            slug: element.slug,
+                                        });
+                                    }}
+                                >
+                                    <Image
+                                        style={styles.image}
+                                        source={{ uri: element.logos.light }}
+                                    />
+                                    <Text style={styles.textBase}>
+                                        <Text>{element.name + "\n"}</Text>
+                                        <Text style={styles.subtitle}>{element.abbr}</Text>
+                                    </Text>
+                                </TouchableOpacity>
+                            );
                     })}
                 </ScrollView>
             </SafeAreaView>
@@ -68,22 +63,25 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
         alignItems: "center",
         padding: 10,
-        marginTop: 5,
+        marginVertical: 2,
+        backgroundColor: "#fefefe",
+        elevation: 1,
     },
     textBase: {
-        fontSize: 30,
+        fontSize: 20,
         fontFamily: "Roboto_300Light",
         flex: 1,
         flexDirection: "column",
         marginLeft: 20,
     },
     subtitle: {
-        fontSize: 20,
+        fontSize: 15,
         fontWeight: "bold",
     },
     image: {
-        resizeMode: "center",
-        width: 100,
-        height: 100,
+        width: 60,
+        height: 60,
+        overflow: "hidden",
+        resizeMode: "cover",
     },
 });
