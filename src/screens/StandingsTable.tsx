@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Text, View, Image } from "react-native";
 import { StandingsNavProp } from "../interfaces/stacks/StandingsStack";
-import { DataTable } from "react-native-paper";
+import { ActivityIndicator, DataTable } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { useStanding } from "../hooks";
 import { Center } from "../utils";
@@ -18,7 +18,7 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
     if (loading)
         return (
             <Center>
-                <Text>{`Carregando ${route.params?.name}...`}</Text>
+                <ActivityIndicator color="#567d46" size={"large"} />
             </Center>
         );
     else
