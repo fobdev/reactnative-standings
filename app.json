@@ -27,6 +27,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Challange project",
+    "githubUrl": "https://github.com/fobdev/reactnative-standings"
   }
 }
