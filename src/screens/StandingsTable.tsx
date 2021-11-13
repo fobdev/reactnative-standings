@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Text, View, Image } from "react-native";
+import { Text, Image, View } from "react-native";
 import { StandingsNavProp } from "../interfaces/stacks/StandingsStack";
 import { ActivityIndicator, DataTable } from "react-native-paper";
 import { ScrollView } from "react-native-gesture-handler";
 import { useStanding } from "../hooks";
 import { Center } from "../utils";
+import { StandingsResponse } from "../interfaces";
 
 export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standings">) => {
     const [loading, setLoading] = useState(true);
     const { standingTasks, getStanding } = useStanding(route.params?.id!);
+
+    const findCount = (element: StandingsResponse, name: string) => {
+        return element.stats.find((current) => current.name === name);
+    };
 
     useEffect(() => {
         navigation.setOptions({ title: route.params?.name });
@@ -36,52 +41,71 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
                         })}
                     </DataTable.Header>
                     {standingTasks?.data!.standings.map((element, index) => {
-                        const findCount = (name: string) => {
-                            return element.stats.find((current) => current.name === name);
-                        };
+                        let bgcolorChange = index % 2 === 0 ? "#efe" : "#fff";
 
-                        const winCount = findCount("wins");
-                        const pointsCount = findCount("points");
-                        const pointsForCount = findCount("pointsFor");
-                        const gamesPlayedCount = findCount("gamesPlayed");
-                        const pointsAgainstCount = findCount("pointsAgainst");
-                        const pointDifferentialCount = findCount("pointDifferential");
+                        const winCount = findCount(element, "wins");
+                        const pointsCount = findCount(element, "points");
+                        const pointsForCount = findCount(element, "pointsFor");
+                        const gamesPlayedCount = findCount(element, "gamesPlayed");
+                        const pointsAgainstCount = findCount(element, "pointsAgainst");
+                        const pointDifferentialCount = findCount(element, "pointDifferential");
 
                         return (
-                            <DataTable.Row key={index}>
-                                <DataTable.Cell style={{ flex: 5 }}>
-                                    <Image
-                                        source={
-                                            element.team!.logos
-                                                ? {
-                                                      uri: element.team.logos[0].href,
-                                                      width: 20,
-                                                      height: 20,
-                                                  }
-                                                : require("../../assets/noimage.png")
-                                        }
+                            <View key={index}>
+                                <DataTable.Row
+                                    style={{
+                                        alignContent: "center",
+                                        backgroundColor: bgcolorChange,
+                                    }}
+                                >
+                                    <View
                                         style={{
-                                            width: 20,
-                                            height: 20,
+                                            flex: 5,
+                                            flexDirection: "row",
+                                            alignItems: "center",
                                         }}
-                                    />
-                                    <Text>{element.team.name}</Text>
-                                </DataTable.Cell>
-                                {[
-                                    winCount?.displayValue,
-                                    gamesPlayedCount?.displayValue,
-                                    pointsCount?.displayValue,
-                                    pointDifferentialCount?.displayValue,
-                                    pointsForCount?.displayValue,
-                                    pointsAgainstCount?.displayValue,
-                                ].map((element, index) => {
-                                    return (
-                                        <DataTable.Cell numeric key={index}>
-                                            {element}
-                                        </DataTable.Cell>
-                                    );
-                                })}
-                            </DataTable.Row>
+                                    >
+                                        <View>
+                                            <Image
+                                                source={
+                                                    element.team!.logos
+                                                        ? {
+                                                              uri: element.team.logos[0].href,
+                                                              width: 30,
+                                                              height: 30,
+                                                          }
+                                                        : require("../../assets/noimage.png")
+                                                }
+                                                style={{
+                                                    width: 30,
+                                                    height: 30,
+                                                }}
+                                            />
+                                        </View>
+                                        <View style={{ marginLeft: 5 }}>
+                                            <Text>
+                                                {element.team.displayName.length < 20
+                                                    ? element.team.displayName
+                                                    : element.team.shortDisplayName}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                    {[
+                                        winCount?.displayValue,
+                                        gamesPlayedCount?.displayValue,
+                                        pointsCount?.displayValue,
+                                        pointDifferentialCount?.displayValue,
+                                        pointsForCount?.displayValue,
+                                        pointsAgainstCount?.displayValue,
+                                    ].map((element, index) => {
+                                        return (
+                                            <DataTable.Cell numeric key={index}>
+                                                {element}
+                                            </DataTable.Cell>
+                                        );
+                                    })}
+                                </DataTable.Row>
+                            </View>
                         );
                     })}
                 </ScrollView>
