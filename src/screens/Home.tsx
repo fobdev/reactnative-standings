@@ -14,26 +14,11 @@ import { Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
 
 export const Home = ({ navigation, route }: StandingsNavProp<"Home">) => {
     const [fontLoaded] = useFonts({ Roboto_300Light });
-
-    const [standingKey, setStandingKey] = useState("arg.1");
     const { leaguesTasks, getAllLeagues } = useLeagues();
-    const { standingTasks, getStanding } = useStanding(standingKey);
 
     useEffect(() => {
         getAllLeagues();
     }, [getAllLeagues]);
-
-    const handleLeagueItemPress = (element: LeaguesData, index: number) => {
-        getStanding(standingKey).then(() => {
-            navigation.navigate("Standings", {
-                id: element.id,
-                abbr: element.abbr,
-                logos: element.logos,
-                name: element.name,
-                slug: element.slug,
-            });
-        });
-    };
 
     if (!fontLoaded)
         return (
@@ -51,7 +36,13 @@ export const Home = ({ navigation, route }: StandingsNavProp<"Home">) => {
                                 style={styles.customButton}
                                 key={index}
                                 onPress={() => {
-                                    handleLeagueItemPress(element, index);
+                                    navigation.navigate("Standings", {
+                                        id: element.id,
+                                        abbr: element.abbr,
+                                        logos: element.logos,
+                                        name: element.name,
+                                        slug: element.slug,
+                                    });
                                 }}
                             >
                                 <Image style={styles.image} source={{ uri: element.logos.light }} />
