@@ -32,6 +32,7 @@ export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
             <SafeAreaView>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {leaguesTasks?.data!.map((element, index) => {
+                        if (element.id !== "chn.1")
                         return (
                             <TouchableOpacity
                                 style={styles.customButton}
