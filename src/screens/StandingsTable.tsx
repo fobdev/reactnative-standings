@@ -47,13 +47,7 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
                         const pointDifferentialCount = findCount("pointDifferential");
 
                         return (
-                            <DataTable.Row
-                                key={index}
-                                style={{
-                                    flex: 1,
-                                    justifyContent: "center",
-                                }}
-                            >
+                            <DataTable.Row key={index}>
                                 <DataTable.Cell style={{ flex: 5 }}>
                                     <Image
                                         source={
