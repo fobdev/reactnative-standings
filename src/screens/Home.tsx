@@ -24,6 +24,9 @@ export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
             <SafeAreaView>
                 <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
                     {leaguesTasks?.data!.map((element, index) => {
+                        /**
+                         * Liga removida por conta de um bug no backend relacionada a "chn.1"
+                         */
                         if (element.id !== "chn.1")
                             return (
                                 <TouchableOpacity
