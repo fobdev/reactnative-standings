@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { Text, Image, View } from "react-native";
 import { StandingsNavProp } from "../interfaces/stacks/StandingsStack";
 import { ActivityIndicator, DataTable } from "react-native-paper";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useStanding } from "../hooks";
 import { Center } from "../utils";
 import { StandingsResponse } from "../interfaces";
+import { Roboto_100Thin, Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
 
 export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standings">) => {
     const [loading, setLoading] = useState(true);
     const { standingTasks, getStanding } = useStanding(route.params?.id!);
+    const [fontLoaded] = useFonts({ Roboto_300Light, Roboto_100Thin });
 
     const findCount = (element: StandingsResponse, name: string) => {
         return element.stats.find((current) => current.name === name);
@@ -51,61 +53,65 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
                         const pointDifferentialCount = findCount(element, "pointDifferential");
 
                         return (
-                            <View key={index}>
-                                <DataTable.Row
-                                    style={{
-                                        alignContent: "center",
-                                        backgroundColor: bgcolorChange,
-                                    }}
-                                >
-                                    <View
+                            <TouchableOpacity key={index}>
+                                <View>
+                                    <DataTable.Row
                                         style={{
-                                            flex: 5,
-                                            flexDirection: "row",
-                                            alignItems: "center",
+                                            alignContent: "center",
+                                            backgroundColor: bgcolorChange,
                                         }}
                                     >
-                                        <View>
-                                            <Image
-                                                source={
-                                                    element.team!.logos
-                                                        ? {
-                                                              uri: element.team.logos[0].href,
-                                                              width: 30,
-                                                              height: 30,
-                                                          }
-                                                        : require("../../assets/noimage.png")
-                                                }
-                                                style={{
-                                                    width: 30,
-                                                    height: 30,
-                                                }}
-                                            />
+                                        <View
+                                            style={{
+                                                flex: 5,
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                            }}
+                                        >
+                                            <View>
+                                                <Image
+                                                    source={
+                                                        element.team!.logos
+                                                            ? {
+                                                                  uri: element.team.logos[0].href,
+                                                                  width: 30,
+                                                                  height: 30,
+                                                              }
+                                                            : require("../../assets/noimage.png")
+                                                    }
+                                                    style={{
+                                                        width: 30,
+                                                        height: 30,
+                                                    }}
+                                                />
+                                            </View>
+                                            <View style={{ marginLeft: 5 }}>
+                                                <Text style={{ fontFamily: "Roboto_300Light" }}>
+                                                    {element.team.displayName.length < 20
+                                                        ? element.team.displayName
+                                                        : element.team.shortDisplayName}
+                                                </Text>
+                                            </View>
                                         </View>
-                                        <View style={{ marginLeft: 5 }}>
-                                            <Text>
-                                                {element.team.displayName.length < 20
-                                                    ? element.team.displayName
-                                                    : element.team.shortDisplayName}
-                                            </Text>
-                                        </View>
-                                    </View>
-                                    {[
-                                        winCount?.displayValue,
-                                        gamesPlayedCount?.displayValue,
-                                        pointsCount?.displayValue,
-                                        pointDifferentialCount?.displayValue,
-                                        pointsForCount?.displayValue,
-                                        pointsAgainstCount?.displayValue,
-                                    ].map((element, index) => {
-                                        return (
-                                            <DataTable.Cell numeric key={index}>
-                                                {element}
-                                            </DataTable.Cell>
-                                        );
-                                    })}
-                                </DataTable.Row>
-                            </View>
+                                        {[
+                                            winCount?.displayValue,
+                                            gamesPlayedCount?.displayValue,
+                                            pointsCount?.displayValue,
+                                            pointDifferentialCount?.displayValue,
+                                            pointsForCount?.displayValue,
+                                            pointsAgainstCount?.displayValue,
+                                        ].map((element, index) => {
+                                            return (
+                                                <DataTable.Cell numeric key={index}>
+                                                    <Text style={{ fontFamily: "Roboto_100Thin" }}>
+                                                        {element}
+                                                    </Text>
+                                                </DataTable.Cell>
+                                            );
+                                        })}
+                                    </DataTable.Row>
+                                </View>
+                            </TouchableOpacity>
                         );
                     })}
                 </ScrollView>
