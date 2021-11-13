@@ -14,12 +14,22 @@ export const Routes: React.FC<RoutesProps> = ({}) => {
         <NavigationContainer>
             <Navigator initialRouteName="Home">
                 <Screen
-                    options={{ title: "Classificações de Ligas" }}
+                    options={{
+                        title: "Classificações de Ligas 2021",
+                        headerTintColor: "white",
+                        headerStyle: { backgroundColor: "#567d46" },
+                        headerShadowVisible: false,
+                    }}
                     name="Home"
                     component={Home}
                 />
                 <Screen
-                    options={{ title: "Carregando..." }}
+                    options={{
+                        title: "Carregando...",
+                        headerStyle: { backgroundColor: "#567d46" },
+                        headerTintColor: "white",
+                        headerShadowVisible: false,
+                    }}
                     name="Standings"
                     component={StandingsTable}
                 />
