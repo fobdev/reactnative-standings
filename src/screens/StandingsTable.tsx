@@ -24,7 +24,7 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
     else
         return (
             <DataTable>
-                <ScrollView>
+                <ScrollView overScrollMode="never">
                     <DataTable.Header>
                         <DataTable.Title style={{ flex: 5 }}>Time</DataTable.Title>
                         {["P", "J", "V", "SG", "GP", "GC"].map((element, index) => {
