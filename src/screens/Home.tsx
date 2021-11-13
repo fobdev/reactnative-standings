@@ -38,7 +38,7 @@ export const Home = ({ navigation, route }: StandingsNavProp<"Home">) => {
     if (!fontLoaded)
         return (
             <View>
-                <Text>Loading...</Text>
+                <Text>Carregando...</Text>
             </View>
         );
     else
