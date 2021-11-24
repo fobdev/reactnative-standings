@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
-import { StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Image, Text } from "react-native";
+import React, { useState, useEffect } from "react";
+import { SafeAreaView, ScrollView, TouchableOpacity, Image, Text } from "react-native";
 import { useLeagues } from "../hooks";
 import { StandingsNavProp } from "../interfaces";
 import { Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
 import { Center } from "../utils";
+import { styles } from "./styles/Home";
+import { ActivityIndicator } from "react-native-paper";
 
 export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
     const [loading, setLoading] = useState(true);
@@ -61,33 +63,3 @@ export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
         );
 };
 export default Home;
-
-const styles = StyleSheet.create({
-    customButton: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: "flex-start",
-        alignItems: "center",
-        padding: 10,
-        marginVertical: 2,
-        backgroundColor: "#fefefe",
-        elevation: 1,
-    },
-    textBase: {
-        fontSize: 20,
-        fontFamily: "Roboto_300Light",
-        flex: 1,
-        flexDirection: "column",
-        marginLeft: 20,
-    },
-    subtitle: {
-        fontSize: 15,
-        fontWeight: "bold",
-    },
-    image: {
-        width: 60,
-        height: 60,
-        overflow: "hidden",
-        resizeMode: "cover",
-    },
-});
