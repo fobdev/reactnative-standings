@@ -22,7 +22,7 @@ export const StandingsTable = ({ navigation, route }: StandingsNavProp<"Standing
         getStanding(route.params?.id).then(() => setLoading(false));
     }, [getStanding]);
 
-    if (loading)
+    if (loading || !fontLoaded)
         return (
             <Center>
                 <ActivityIndicator color="#567d46" size={"large"} />
