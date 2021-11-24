@@ -6,17 +6,20 @@ import { Roboto_300Light, useFonts } from "@expo-google-fonts/roboto";
 import { Center } from "../utils";
 
 export const Home = ({ navigation }: StandingsNavProp<"Home">) => {
+    const [loading, setLoading] = useState(true);
     const [fontLoaded] = useFonts({ Roboto_300Light });
     const { leaguesTasks, getAllLeagues } = useLeagues();
 
     useEffect(() => {
-        getAllLeagues();
+        getAllLeagues().then(() => {
+            setLoading(false);
+        });
     }, [getAllLeagues]);
 
-    if (!fontLoaded)
+    if (loading || !fontLoaded)
         return (
             <Center>
-                <Text>Carregando...</Text>
+                <ActivityIndicator color="#567d46" size={"large"} />
             </Center>
         );
     else
